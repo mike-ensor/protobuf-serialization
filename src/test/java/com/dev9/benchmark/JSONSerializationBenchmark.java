@@ -1,6 +1,8 @@
 package com.dev9.benchmark;
 
 import org.openjdk.jmh.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
@@ -10,9 +12,11 @@ import java.util.stream.LongStream;
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class JSONSerializationBenchmark {
 
-    @Setup
-    public void setup() {
+    private static final Logger LOG = LoggerFactory.getLogger(JSONSerializationBenchmark.class);
 
+    @Setup(Level.Trial)
+    public void setup() {
+        LOG.error("Setting up the code");
     }
 
     @Benchmark

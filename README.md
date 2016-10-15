@@ -11,3 +11,7 @@
    7. Create test harness to test timing
 
 2. Extend benchmarking to do a simple call to a stand-alone service implemented using both JSON and Protobuf
+
+
+## Helpful Links
+http://tutorials.jenkov.com/java-performance/jmh.html
