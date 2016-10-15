@@ -1,16 +1,18 @@
 package com.dev9.ensor.service;
 
-import com.dev9.ensor.model.BaseQuantity;
-import com.dev9.ensor.model.Item;
+import com.dev9.ensor.model.Ingredient;
+import com.dev9.ensor.model.IngredientUsed;
 import com.dev9.ensor.model.MeasurementType;
 import com.dev9.ensor.model.Recipe;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import com.dev9.ensor.util.RecipeTestUtil;
+import com.google.common.collect.ImmutableList;
+import com.google.protobuf.InvalidProtocolBufferException;
+import generated.dev9.proto.Messages;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class RecipeServiceTest {
 
@@ -23,16 +25,32 @@ public class RecipeServiceTest {
 
     @Test
     public void addRecipe() throws Exception {
+        Recipe recipe = createRecipe();
 
+        assertThat(recipe.getIngredientsWithQuantity().size(), is(2));
+    }
+
+    @Test
+    public void tryProtobufSerialization() throws InvalidProtocolBufferException {
+
+        Recipe recipe = createRecipe();
+
+        Messages.Recipe protoRecipe = service.getProtoRecipe(recipe);
+        assertThat(protoRecipe.getDescription(), is(recipe.getDescription()));
+        assertThat(protoRecipe.getIngredientsCount(), is(2));
+    }
+
+    private Recipe createRecipe() {
         String name = "My Recipe";
         String description = "Some spicy recipe using a few items";
 
-        Item jalepeno = new Item("Jalepeno", "Spicy Pepper", BaseQuantity.SINGLE_ITEM);
-        Item cheese = new Item("Cheese", "Creamy Cheese", new BaseQuantity(MeasurementType.GRAMS, 28));
+        Ingredient jalepeno = new Ingredient("Jalepeno", "Spicy Pepper");
+        Ingredient cheese = new Ingredient("Cheese", "Creamy Cheese");
+
+        IngredientUsed jalepenoUsed = new IngredientUsed(jalepeno, MeasurementType.ITEM, 1);
+        IngredientUsed cheeseUsed = new IngredientUsed(cheese, MeasurementType.OUNCE, 4);
 
         // one part Jalepeno, one part Cheese
-        Recipe recipe = service.createRecipe(name, description, ImmutableMap.of(jalepeno, 1, cheese, 2));
-
-        assertThat(recipe.getItemQuantity().size(), is(2));
+        return RecipeTestUtil.createRecipe(name, description, ImmutableList.of(jalepenoUsed, cheeseUsed));
     }
 }

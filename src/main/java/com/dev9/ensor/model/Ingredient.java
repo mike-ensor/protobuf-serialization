@@ -1,15 +1,13 @@
 package com.dev9.ensor.model;
 
-public class Item {
+public class Ingredient {
 
     private String name;
     private String description;
-    private BaseQuantity baseQuantity;
 
-    public Item(String name, String description, BaseQuantity baseQuantity) {
+    public Ingredient(String name, String description) {
         this.name = name;
         this.description = description;
-        this.baseQuantity = baseQuantity;
     }
 
     public String getName() {
@@ -20,7 +18,4 @@ public class Item {
         return description;
     }
 
-    public BaseQuantity getBaseQuantity() {
-        return baseQuantity;
-    }
 }

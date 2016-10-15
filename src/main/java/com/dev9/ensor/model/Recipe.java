@@ -1,20 +1,19 @@
 package com.dev9.ensor.model;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
 import java.util.List;
-import java.util.Map;
 
 public class Recipe {
 
     private String name;
     private String description;
-    private Map<Item, Integer> itemQuantity;
+    private List<IngredientUsed> ingredientsWithQuantity;
 
     public Recipe(String name, String description) {
         this.name = name;
         this.description = description;
-        itemQuantity = Maps.newHashMap();
+        ingredientsWithQuantity = Lists.newArrayList();
     }
 
     public String getName() {
@@ -25,11 +24,11 @@ public class Recipe {
         return description;
     }
 
-    public Map<Item, Integer> getItemQuantity() {
-        return itemQuantity;
+    public List<IngredientUsed> getIngredientsWithQuantity() {
+        return ingredientsWithQuantity;
     }
 
-    public void addItems(Map<Item, Integer> itemQuantity) {
-        this.itemQuantity.putAll(itemQuantity);
+    public void addItems(List<IngredientUsed> itemQuantity) {
+        this.ingredientsWithQuantity.addAll(itemQuantity);
     }
 }
