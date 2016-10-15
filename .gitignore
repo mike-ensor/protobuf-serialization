@@ -1,0 +1,18 @@
+*.class
+
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# IntelliJ Files
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Benchmark Tests
+*.text
+
