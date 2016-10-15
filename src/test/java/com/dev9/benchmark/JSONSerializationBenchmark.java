@@ -26,10 +26,12 @@ public class JSONSerializationBenchmark {
 
     @Benchmark
     @BenchmarkMode(Mode.Throughput)
-    public void simpleMathSummation() {
+    public int simpleMathSummation() {
         int a = 1;
         int b = 2;
         int sum = a + b;
+
+        return sum;
     }
 
 }
