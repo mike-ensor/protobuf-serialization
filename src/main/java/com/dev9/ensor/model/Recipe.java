@@ -52,4 +52,13 @@ public class Recipe {
             this.ingredientsWithQuantity.addAll(itemQuantity);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", ingredientsWithQuantity=" + ingredientsWithQuantity +
+                '}';
+    }
 }

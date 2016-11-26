@@ -27,4 +27,13 @@ public class IngredientUsed {
     public Ingredient getIngredient() {
         return ingredient;
     }
+
+    @Override
+    public String toString() {
+        return "IngredientUsed{" +
+                "type=" + type +
+                ", ingredient=" + ingredient +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

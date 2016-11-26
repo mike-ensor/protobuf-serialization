@@ -11,6 +11,7 @@ import generated.dev9.proto.Messages;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.dev9.ensor.util.RecipeTestUtil.getMockRecipeJSONString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -43,7 +44,7 @@ public class RecipeServiceTest {
     @Test
     public void fromJSON() {
         String description = "Some spicy recipe using a few items";
-        String json = "{\"name\":\"My Recipe\",\"description\":\"" + description + "\",\"ingredientsWithQuantity\":[{\"type\":\"ITEM\",\"ingredient\":{\"name\":\"Jalepeno\",\"description\":\"Spicy Pepper\"},\"quantity\":1},{\"type\":\"OUNCE\",\"ingredient\":{\"name\":\"Cheese\",\"description\":\"Creamy Cheese\"},\"quantity\":4}]}";
+        String json = getMockRecipeJSONString(description);
 
         Recipe recipe = service.getRecipe(json);
         assertThat(recipe.getDescription(), is(description));
