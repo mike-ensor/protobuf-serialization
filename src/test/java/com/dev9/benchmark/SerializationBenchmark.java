@@ -20,12 +20,11 @@ import java.util.concurrent.TimeUnit;
 public class SerializationBenchmark {
 
     private static final Logger LOG = LoggerFactory.getLogger(SerializationBenchmark.class);
-
     private RecipeService service;
     private Recipe recipe;
-
     private byte[] protoRecipe;
     private String recipeAsJSON;
+
 
     @Setup(Level.Trial)
     public void setup() {
@@ -37,6 +36,7 @@ public class SerializationBenchmark {
 
         protoRecipe = service.recipeAsProto(recipe).toByteArray();
         recipeAsJSON = service.recipeAsJSON(recipe);
+
     }
 
     @Benchmark
