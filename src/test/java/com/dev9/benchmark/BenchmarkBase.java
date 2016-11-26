@@ -6,18 +6,26 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class BenchmarkBase {
 
     public static void main(String[] args) throws RunnerException {
+        LocalDateTime date = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-yyyy-hh-mm-ss");
+
         Options opt = new OptionsBuilder()
                 .include(".*Benchmark.*")
                 .warmupIterations(5)
                 .measurementIterations(5)
-                .forks(1)
-                .threads(1)
+                .forks(3)
+                .threads(3)
                 .shouldDoGC(true)
                 .shouldFailOnError(true)
-                .resultFormat(ResultFormatType.TEXT)
+                .resultFormat(ResultFormatType.JSON)
+                .result("target/jhm-" + date.format(formatter) + ".json")
                 .jvmArgs("-server")
                 .build();
 
