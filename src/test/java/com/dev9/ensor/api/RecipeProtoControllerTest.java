@@ -1,8 +1,15 @@
 package com.dev9.ensor.api;
 
 import com.dev9.ensor.ProtobufSerializationApplication;
+import com.dev9.ensor.mapper.RecipeProtoMapper;
+import com.dev9.ensor.model.Ingredient;
+import com.dev9.ensor.model.IngredientUsed;
+import com.dev9.ensor.model.MeasurementType;
 import com.dev9.ensor.model.Recipe;
+import com.dev9.ensor.util.RecipeTestUtil;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import generated.dev9.proto.Messages;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +18,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.dev9.ensor.util.RecipeTestUtil.getMockRecipeJSONString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,41 +32,50 @@ public class RecipeProtoControllerTest {
 
     @Test
     public void getRecipeById() throws Exception {
-        String description = "Recipe Description Here";
-        ResponseEntity<Integer> response = createRecipeByURL(getMockRecipeJSONString(description));
+
+        String recipeName = "My Recipe Here";
+        ResponseEntity<Integer> response = createRecipeMessage(recipeName);
 
         Integer createdID = response.getBody();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(new MediaType("application", "x-protobuf"));
 
-        ResponseEntity<Recipe> foundRecipe = template.exchange("/json/recipe?id={id}", HttpMethod.GET, new HttpEntity<String>(headers), Recipe.class, ImmutableMap.of("id", createdID));
+        ResponseEntity<Messages.Recipe> foundRecipe = template.exchange("/proto/recipe?id={id}", HttpMethod.GET, new HttpEntity<String>(headers), Messages.Recipe.class, ImmutableMap.of("id", createdID));
 
         assertThat(foundRecipe, is(notNullValue()));
 
-        Recipe recipe = foundRecipe.getBody();
+        Messages.Recipe recipe = foundRecipe.getBody();
 
-        assertThat(recipe.getDescription(), is(description));
+        assertThat(recipe.getName(), is(recipeName));
     }
 
     @Test
     public void saveRecipe() throws Exception {
-        ResponseEntity<Integer> response = createRecipeByURL(getMockRecipeJSONString("Recipe Description Here"));
+        ResponseEntity<Integer> response = createRecipeMessage("My Proto Recipe");
 
         assertThat(response, is(notNullValue()));
         assertThat(response.getBody(), is(greaterThanOrEqualTo(0)));
     }
 
-    private ResponseEntity<Integer> createRecipeByURL(String jsonString) {
-        String url = "/json/add";
+    private ResponseEntity<Integer> createRecipeMessage(String recipeName) {
+        String url = "/proto/add";
+
+        Messages.Recipe recipe = RecipeProtoMapper.parseAsProto(getNewRecipe(recipeName));
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(new MediaType("application", "x-protobuf"));
 
-        ResponseEntity<Integer> response = template.exchange(url, HttpMethod.POST, new HttpEntity<>(jsonString, headers), Integer.class);
+        ResponseEntity<Integer> response = template.exchange(url, HttpMethod.POST, new HttpEntity<>(recipe, headers), Integer.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         return response;
+    }
+
+    private Recipe getNewRecipe(String recipeName) {
+        IngredientUsed cheeseUsed = new IngredientUsed(new Ingredient("Cheese", "Creamy Cheese"), MeasurementType.OUNCE, 4);
+
+        return RecipeTestUtil.createRecipe(recipeName, "Some spicy recipe using a few items", ImmutableList.of(cheeseUsed));
     }
 
 }
