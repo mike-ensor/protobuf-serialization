@@ -35,6 +35,7 @@ public class BenchmarkBase {
                 .shouldFailOnError(true)
                 .resultFormat(ResultFormatType.JSON)
                 .result(getFilename())
+                .shouldFailOnError(true)
                 .jvmArgs("-server")
                 .build();
 

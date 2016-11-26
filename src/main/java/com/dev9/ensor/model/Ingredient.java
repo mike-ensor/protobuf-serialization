@@ -1,11 +1,15 @@
 package com.dev9.ensor.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Ingredient {
 
     private String name;
     private String description;
 
-    public Ingredient(String name, String description) {
+    @JsonCreator
+    public Ingredient(@JsonProperty("name") String name, @JsonProperty("description") String description) {
         this.name = name;
         this.description = description;
     }
