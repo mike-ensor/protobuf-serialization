@@ -19,6 +19,12 @@
     1. 
 
 
+## To Run Benchmark Tests:
+```mvn clean verify -Pbenchmark```
+
+## To Run Service Tests:
+```mvn clean verify```
+
 ## Helpful Links
 http://tutorials.jenkov.com/java-performance/jmh.html
 
