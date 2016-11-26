@@ -3,11 +3,8 @@ package com.dev9.ensor.api;
 import com.dev9.ensor.ProtobufSerializationApplication;
 import com.dev9.ensor.model.Recipe;
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -24,15 +21,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 @RunWith(SpringRunner.class)
 public class RecipeProtoControllerTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RecipeProtoControllerTest.class);
-
     @Autowired
     private TestRestTemplate template;
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test
     public void getRecipeById() throws Exception {
