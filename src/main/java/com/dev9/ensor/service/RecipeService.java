@@ -8,6 +8,7 @@ import com.google.common.base.Throwables;
 import generated.dev9.proto.Messages;
 import org.springframework.stereotype.Component;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Component
@@ -44,4 +45,16 @@ public class RecipeService {
         return RecipeProtoMapper.getRecipe(protoRecipe);
     }
 
+    public void writeRecipeToFile(String filename, Messages.Recipe recipe) {
+        try {
+            FileOutputStream output = new FileOutputStream(filename);
+            Messages.Recipe.Builder builder = Messages.Recipe.newBuilder(recipe);
+
+            builder.build().writeTo(output);
+            output.close();
+
+        } catch (IOException e) {
+            throw Throwables.propagate(e);
+        }
+    }
 }

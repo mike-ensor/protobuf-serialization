@@ -50,6 +50,18 @@ public class RecipeServiceTest {
         assertThat(recipe.getIngredientsWithQuantity().size(), is(2));
     }
 
+    @Test
+    public void protoSerializationToFile() throws InvalidProtocolBufferException {
+
+        Recipe recipe = createRecipe();
+
+        Messages.Recipe protoRecipe = service.recipeAsProto(recipe);
+
+        service.writeRecipeToFile("target/myrecipe.bin.proto", protoRecipe);
+
+
+    }
+
     private Recipe createRecipe() {
         String name = "My Recipe";
         String description = "Some spicy recipe using a few items";
