@@ -15,8 +15,12 @@
     6. Create test cases that show/prove serialization
     7. Create test harness to test timing
 
-2. Extend benchmarking to do a simple call to a stand-alone service implemented using both JSON and Protobuf
-    1. 
+2. Investigate the Payload as a second source of performance
+    1. Create a RESTful service that speaks Protobuf and JSON and stores/retrieves Recipes (in-memory)
+    2. Build test suite that runs service locally
+    3. Benchmark: query service with Protobuf objects only
+    4. Benchmark: query service with JSON objects only
+
 
 
 ## To Run Benchmark Tests:
