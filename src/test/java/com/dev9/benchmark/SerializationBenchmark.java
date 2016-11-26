@@ -35,13 +35,13 @@ public class SerializationBenchmark {
         recipe = RecipeTestUtil.createRecipe("My Recipe", "Some spicy recipe using a few items", ImmutableList.of(jalepenoUsed, cheeseUsed));
         service = new RecipeService();
 
-        protoRecipe = service.getProtoRecipe(recipe).toByteArray();
+        protoRecipe = service.recipeAsProto(recipe).toByteArray();
         recipeAsJSON = service.recipeAsJSON(recipe);
     }
 
     @Benchmark
     public Messages.Recipe serialize_recipe_object_to_protobuf() {
-        return service.getProtoRecipe(recipe);
+        return service.recipeAsProto(recipe);
     }
 
     @Benchmark

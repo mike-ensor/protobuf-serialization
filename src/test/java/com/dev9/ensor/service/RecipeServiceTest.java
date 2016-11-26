@@ -35,7 +35,7 @@ public class RecipeServiceTest {
 
         Recipe recipe = createRecipe();
 
-        Messages.Recipe protoRecipe = service.getProtoRecipe(recipe);
+        Messages.Recipe protoRecipe = service.recipeAsProto(recipe);
         assertThat(protoRecipe.getDescription(), is(recipe.getDescription()));
         assertThat(protoRecipe.getIngredientsCount(), is(2));
     }
