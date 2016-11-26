@@ -2809,21 +2809,6 @@ public final class Messages {
       /**
        * <code>optional .dev9.Ingredient ingredient = 1;</code>
        */
-      public Builder setIngredient(
-              generated.dev9.proto.Messages.Ingredient.Builder builderForValue) {
-        if (ingredientBuilder_ == null) {
-          ingredient_ = builderForValue.build();
-          onChanged();
-        } else {
-          ingredientBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-
-      /**
-       * <code>optional .dev9.Ingredient ingredient = 1;</code>
-       */
       public Builder setIngredient(generated.dev9.proto.Messages.Ingredient value) {
         if (ingredientBuilder_ == null) {
           if (value == null) {
@@ -2833,6 +2818,21 @@ public final class Messages {
           onChanged();
         } else {
           ingredientBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+
+      /**
+       * <code>optional .dev9.Ingredient ingredient = 1;</code>
+       */
+      public Builder setIngredient(
+              generated.dev9.proto.Messages.Ingredient.Builder builderForValue) {
+        if (ingredientBuilder_ == null) {
+          ingredient_ = builderForValue.build();
+          onChanged();
+        } else {
+          ingredientBuilder_.setMessage(builderForValue.build());
         }
 
         return this;
