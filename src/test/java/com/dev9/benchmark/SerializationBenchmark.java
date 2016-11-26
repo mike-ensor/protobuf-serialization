@@ -30,10 +30,13 @@ public class SerializationBenchmark {
     }
 
     @Benchmark
-//    @BenchmarkMode(Mode.SampleTime)
     public Messages.Recipe serializeToProtobufRecipe() {
         return service.getProtoRecipe(recipe);
     }
 
+    @Benchmark
+    public String serializeToJSONRecipe() {
+        return service.recipeAsJSON(recipe);
+    }
 
 }

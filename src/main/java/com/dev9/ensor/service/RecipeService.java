@@ -2,18 +2,25 @@ package com.dev9.ensor.service;
 
 import com.dev9.ensor.model.IngredientUsed;
 import com.dev9.ensor.model.Recipe;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import generated.dev9.proto.Messages;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.List;
 
 @Component
 public class RecipeService {
+
+    private ObjectMapper mapper;
+
+    public RecipeService() {
+        mapper = new ObjectMapper();
+    }
 
     public Messages.Recipe getProtoRecipe(Recipe recipe) {
         Messages.Recipe.Builder recipeBuilder = Messages.Recipe.newBuilder();
@@ -35,13 +42,17 @@ public class RecipeService {
         return recipeBuilder.build();
     }
 
-    public Recipe recipeAsJSON(String recipeJSONForm) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(recipeJSONForm, Recipe.class);
+    public String recipeAsJSON(Recipe recipeJSONForm) {
+        try {
+            return mapper.writeValueAsString(recipeJSONForm);
+
+        } catch (JsonProcessingException e) {
+            throw Throwables.propagate(e);
+        }
     }
 
     public Recipe getRecipeFromJsonString(String jsonRecipe) {
-        ObjectMapper mapper = new ObjectMapper();
+
         return mapper.convertValue(jsonRecipe, Recipe.class);
     }
 
