@@ -6,11 +6,10 @@ import com.dev9.ensor.model.MeasurementType;
 import com.dev9.ensor.model.Recipe;
 import com.dev9.ensor.service.RecipeService;
 import com.dev9.ensor.util.RecipeTestUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import generated.dev9.proto.Messages;
 import org.openjdk.jmh.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class SerializationBenchmark {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SerializationBenchmark.class);
     private RecipeService service;
     private Recipe recipe;
     private byte[] protoRecipe;
@@ -32,7 +30,7 @@ public class SerializationBenchmark {
         IngredientUsed cheeseUsed = new IngredientUsed(new Ingredient("Cheese", "Creamy Cheese"), MeasurementType.OUNCE, 4);
 
         recipe = RecipeTestUtil.createRecipe("My Recipe", "Some spicy recipe using a few items", ImmutableList.of(jalepenoUsed, cheeseUsed));
-        service = new RecipeService();
+        service = new RecipeService(new ObjectMapper());
 
         protoRecipe = service.recipeAsProto(recipe).toByteArray();
         recipeAsJSON = service.recipeAsJSON(recipe);

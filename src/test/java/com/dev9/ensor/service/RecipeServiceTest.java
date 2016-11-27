@@ -5,6 +5,7 @@ import com.dev9.ensor.model.IngredientUsed;
 import com.dev9.ensor.model.MeasurementType;
 import com.dev9.ensor.model.Recipe;
 import com.dev9.ensor.util.RecipeTestUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.InvalidProtocolBufferException;
 import generated.dev9.proto.Messages;
@@ -21,7 +22,7 @@ public class RecipeServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        service = new RecipeService();
+        service = new RecipeService(new ObjectMapper());
     }
 
     @Test

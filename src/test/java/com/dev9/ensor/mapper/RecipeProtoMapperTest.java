@@ -9,13 +9,17 @@ import com.google.common.collect.ImmutableList;
 import generated.dev9.proto.Messages;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class RecipeProtoMapperTest {
+public class RecipeProtoMapperTest implements MemoryTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RecipeProtoMapperTest.class);
 
     private Recipe recipe;
     private String ingredientName = "Cheese";

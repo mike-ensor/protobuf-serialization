@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import generated.dev9.proto.Messages;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
@@ -16,8 +17,9 @@ public class RecipeService {
 
     private ObjectMapper mapper;
 
-    public RecipeService() {
-        mapper = new ObjectMapper();
+    @Autowired
+    public RecipeService(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 
     public Messages.Recipe recipeAsProto(Recipe recipe) {
