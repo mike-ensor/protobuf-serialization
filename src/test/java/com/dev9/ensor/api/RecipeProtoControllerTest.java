@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
+import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -39,7 +40,7 @@ public class RecipeProtoControllerTest {
         Integer createdID = response.getBody();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "x-protobuf"));
+        headers.setContentType(ProtobufHttpMessageConverter.PROTOBUF);
 
         ResponseEntity<Messages.Recipe> foundRecipe = template.exchange("/proto/recipe?id={id}", HttpMethod.GET, new HttpEntity<String>(headers), Messages.Recipe.class, ImmutableMap.of("id", createdID));
 
@@ -64,7 +65,7 @@ public class RecipeProtoControllerTest {
         Messages.Recipe recipe = RecipeProtoMapper.parseAsProto(getNewRecipe(recipeName));
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "x-protobuf"));
+        headers.setContentType(ProtobufHttpMessageConverter.PROTOBUF);
 
         ResponseEntity<Integer> response = template.exchange(url, HttpMethod.POST, new HttpEntity<>(recipe, headers), Integer.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class SerializationBenchmark {
 
     private static final Logger LOG = LoggerFactory.getLogger(SerializationBenchmark.class);
