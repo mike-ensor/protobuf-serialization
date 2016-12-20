@@ -12,6 +12,9 @@ import generated.dev9.proto.Messages;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static com.dev9.ensor.util.RecipeTestUtil.getMockRecipeJSONString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -55,13 +58,14 @@ public class RecipeServiceTest {
     @Test
     public void protoSerializationToFile() throws InvalidProtocolBufferException {
 
+        LocalDateTime dateTime = LocalDateTime.now();
+        String dateFormatted = dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy-hh-mm-ss"));
+
         Recipe recipe = createRecipe();
 
         Messages.Recipe protoRecipe = service.recipeAsProto(recipe);
 
-        service.writeRecipeToFile("target/myrecipe.bin.proto", protoRecipe);
-
-
+        service.writeRecipeToFile(String.format("target/myrecipe.bin.%s.proto", dateFormatted), protoRecipe);
     }
 
     private Recipe createRecipe() {

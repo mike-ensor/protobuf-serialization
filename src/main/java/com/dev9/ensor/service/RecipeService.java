@@ -48,13 +48,11 @@ public class RecipeService {
     }
 
     public void writeRecipeToFile(String filename, Messages.Recipe recipe) {
-        try {
-            FileOutputStream output = new FileOutputStream(filename);
-            Messages.Recipe.Builder builder = Messages.Recipe.newBuilder(recipe);
+        try (FileOutputStream output = new FileOutputStream(filename)) {
 
+            Messages.Recipe.Builder builder = Messages.Recipe.newBuilder(recipe);
             builder.build().writeTo(output);
             output.close();
-
         } catch (IOException e) {
             throw Throwables.propagate(e);
         }
