@@ -35,7 +35,7 @@ public class RecipeProtoController {
     @PostMapping(value = "/add", consumes = "application/x-protobuf")
     public String saveRecipe(@RequestBody Messages.Recipe recipe) {
         Integer id = repository.save(recipe);
-        LOG.error("Storing new recipe [{}] with ID [{}]", recipe.getName(), id);
+        LOG.info("Storing new recipe [{}] with ID [{}]", recipe.getName(), id);
         return String.format("%d", id);
     }
 }

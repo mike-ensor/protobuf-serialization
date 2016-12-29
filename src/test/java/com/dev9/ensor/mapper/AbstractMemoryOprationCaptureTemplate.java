@@ -3,6 +3,9 @@ package com.dev9.ensor.mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Attempt to determine how much memory is used during a test
+ */
 public class AbstractMemoryOprationCaptureTemplate implements MemoryTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractMemoryOprationCaptureTemplate.class);
@@ -14,7 +17,7 @@ public class AbstractMemoryOprationCaptureTemplate implements MemoryTest {
     }
 
     protected void logMemoryUsage(long memory, long after, final String Message) {
-        LOG.error(Message + " = {} bytes", bytesToMegabytes((after - memory)));
+        LOG.info(Message + " = {} bytes", bytesToMegabytes((after - memory)));
     }
 
     protected long getMemoryAfterOperation() {

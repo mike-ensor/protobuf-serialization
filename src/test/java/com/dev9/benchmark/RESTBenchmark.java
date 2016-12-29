@@ -22,10 +22,6 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//@Fork(1)
-//@Threads(1)
-//@Warmup(iterations = 1)
-//@Measurement(iterations = 5)
 public class RESTBenchmark {
 
     private static final String JSON_URL = "http://localhost:8080/json/add";
